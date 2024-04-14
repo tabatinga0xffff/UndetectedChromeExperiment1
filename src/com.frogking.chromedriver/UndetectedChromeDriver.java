@@ -7,34 +7,28 @@ import java.io.*;
 import java.util.*;
 
 public class UndetectedChromeDriver extends ChromeDriver{
-
     private boolean _headless;
-
     private Process _browser;
-
     private boolean _keepUserDataDir;
-
     private String _userDataDir;
-
     private ChromeOptions chromeOptions;
-
 
     public void get(String url) {
         if (_headless) {
             _headless();
         }
+
         _cdcProps();
         super.get(url);
     }
-
 
     public void quit(){
         super.quit();
         // kill process
         _browser.destroyForcibly();
         //delete temp user dir
-        if(_keepUserDataDir){
-            for (int i = 0;i<5;i++) {
+        if (_keepUserDataDir) {
+            for (int i = 0;i < 5;i++) {
                 try {
                     File file =  new File(_userDataDir);
                     if(!file.exists()){
@@ -48,11 +42,12 @@ public class UndetectedChromeDriver extends ChromeDriver{
                 catch (Exception e) {
                     try {
                         Thread.sleep(300);
-                    }catch (Exception ignored){ }
+                    } catch (Exception ignored) {
+
+                    }
                 }
             }
         }
-
     }
 
     public UndetectedChromeDriver(ChromeOptions chromeOptions,
@@ -75,7 +70,7 @@ public class UndetectedChromeDriver extends ChromeDriver{
     private void _headless(){
         //set navigator.webdriver
         Object f = this.executeScript("return navigator.webdriver");
-        if(f==null){
+        if (f==null) {
             return;
         }
 
